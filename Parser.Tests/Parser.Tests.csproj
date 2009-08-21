@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConstantTests.cs" />
     <Compile Include="Extensions\AssertExtensions.cs" />
     <Compile Include="BracketsTests.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="FunctionCallTests.cs" />
     <Compile Include="MultiplyTests.cs" />
     <Compile Include="ParameterTests.cs" />
     <Compile Include="ParserTest.cs" />

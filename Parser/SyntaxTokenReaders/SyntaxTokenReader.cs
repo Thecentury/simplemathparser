@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser
+namespace MathParser
 {
 	public abstract class SyntaxTokenReader
 	{
-		private int priority = 0;
-		public int Priority
-		{
-			get { return priority; }
-			set { priority = value; }
-		}
+		public double Priority { get; set; }
 
 		public abstract AST Read(LinkedList<MixedToken> tokens, Grammar grammar);
 	}

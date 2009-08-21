@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Parser.SyntaxTokens;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using MathParser.SyntaxTokens;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser.SyntaxTokenReaders
+namespace MathParser.SyntaxTokenReaders
 {
 	public abstract class BinaryOpSyntaxTokenReader<TLexicToken, TSyntaxToken> : SyntaxTokenReader where TSyntaxToken : SyntaxToken, new()
 	{
@@ -29,15 +29,15 @@ namespace Parser.SyntaxTokenReaders
 			var node = tokens.FindFirst(t => t.IsLexicToken && t.LexicToken is TLexicToken);
 			if (node != null)
 			{
-				VerifyNode(node, "+");
+				VerifyNode(node, OpName);
 
 				var arg1 = node.Previous.Value;
 				var arg2 = node.Next.Value;
 
 				if (arg1.Tree == null)
-					throw new Exception();
+					throw new ParserException(String.Format("Operation {0}: first parameter not parsed.", OpName));
 				if (arg2.Tree == null)
-					throw new Exception();
+					throw new ParserException(String.Format("Operation {0}: second parameter not parsed.", OpName));
 
 				TSyntaxToken token = new TSyntaxToken();
 				var tree = new AST(token);
@@ -65,7 +65,7 @@ namespace Parser.SyntaxTokenReaders
 			OpName = "*";
 		}
 	}
-	
+
 	public sealed class DivideSyntaxTokenReader : BinaryOpSyntaxTokenReader<DivideToken, DivideSyntaxToken>
 	{
 		public DivideSyntaxTokenReader()

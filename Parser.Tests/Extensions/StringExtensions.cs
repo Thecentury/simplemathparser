@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Parser.Tests
+namespace MathParser.Tests
 {
 	public static class StringExtensions
 	{

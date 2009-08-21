@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
-using Parser.SyntaxTokens;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using MathParser.SyntaxTokens;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser
+namespace MathParser
 {
 	public static class TreeExtensions
 	{
@@ -38,7 +38,7 @@ namespace Parser
 				}
 			}
 
-			return tree;
+			return tree.Value.Optimize(tree);
 		}
 
 		private static AST AsConstant(this AST tree)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Parser.Tests
+namespace MathParser.Tests
 {
 	/// <summary>
 	/// Summary description for ParserTest
