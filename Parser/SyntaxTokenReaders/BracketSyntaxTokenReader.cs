@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser.SyntaxTokenReaders
+namespace MathParser.SyntaxTokenReaders
 {
 	public sealed class BracketSyntaxTokenReader : SyntaxTokenReader
 	{

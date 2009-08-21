@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 using System.Collections.ObjectModel;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser
+namespace MathParser
 {
 	public sealed class ParsingResult
 	{

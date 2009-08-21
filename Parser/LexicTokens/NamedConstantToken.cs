@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Parser.LexicTokens
+namespace MathParser.LexicTokens
 {
-	public sealed class NamedConstantToken : LexicToken
+	public sealed class NamedConstantToken : DoubleToken
 	{
+		public NamedConstantToken(string name, double value):base(value)
+		{
+			Name = name;
+		}
+
 		public string Name { get; set; }
-		public double Value { get; set; }
 
 		public override string ToString()
 		{

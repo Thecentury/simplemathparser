@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Parser.ConsoleTest
+namespace MathParser.ConsoleTest
 {
 	class Program
 	{
@@ -11,8 +11,18 @@ namespace Parser.ConsoleTest
 		{
 			//TestManyBrackets();
 			Test1();
+			TestFunction();
 
 			Console.ReadLine();
+		}
+
+		private static void TestFunction()
+		{
+			Console.WriteLine("sin(x+sin(x+sin(x)))+2".ParseWithParameters("x").Tree.ToPolishInversedNotationString());
+			Console.WriteLine("sin(0 + sin(0 + sin(0))) + 1 + cos(pi)".Parse().Tree.ToPolishInversedNotationString());
+			Console.WriteLine("x+0".ParseWithParameters("x").Tree.ToPolishInversedNotationString());
+			Console.WriteLine("x-0".ParseWithParameters("x").Tree.ToPolishInversedNotationString());
+			Console.WriteLine("x-1".ParseWithParameters("x").Tree.ToPolishInversedNotationString());
 		}
 
 		public static void TestManyBrackets()

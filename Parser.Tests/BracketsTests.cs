@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Parser.Tests
+namespace MathParser.Tests
 {
 	[TestClass]
 	public class BracketsTests

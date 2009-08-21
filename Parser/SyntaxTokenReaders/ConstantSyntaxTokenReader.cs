@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Parser.SyntaxTokens;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using MathParser.SyntaxTokens;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser.SyntaxTokenReaders
+namespace MathParser.SyntaxTokenReaders
 {
 	public class ConstantSyntaxTokenReader : SyntaxTokenReader
 	{

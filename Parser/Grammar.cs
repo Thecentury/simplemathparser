@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Parser.Readers;
-using Parser.SyntaxTokenReaders;
+using MathParser.Readers;
+using MathParser.SyntaxTokenReaders;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
+using System.Reflection;
 
-namespace Parser
+namespace MathParser
 {
 	public class Grammar
 	{
@@ -17,6 +18,7 @@ namespace Parser
 
 		private ParameterTokenReader parameterReader = new ParameterTokenReader();
 		private NamedConstantTokenReader namedConstantReader = new NamedConstantTokenReader();
+		private FunctionCallTokenReader functionReader = new FunctionCallTokenReader();
 
 		public Grammar()
 		{
@@ -29,6 +31,7 @@ namespace Parser
 			lexicReaders.Add(new WhitespaceReader());
 			lexicReaders.Add(new IntegerReader());
 			lexicReaders.Add(parameterReader);
+			lexicReaders.Add(functionReader);
 			lexicReaders.Add(namedConstantReader);
 
 			syntaxReaders.Add(new AddSyntaxTokenReader());
@@ -38,7 +41,7 @@ namespace Parser
 			syntaxReaders.Add(new SubtractSyntaxTokenReader());
 			syntaxReaders.Add(new BracketSyntaxTokenReader());
 			syntaxReaders.Add(new ParameterSyntaxTokenReader());
-			syntaxReaders.Add(new ConstantSyntaxTokenReader());
+			syntaxReaders.Add(new FunctionCallSyntaxTokenReader());
 
 			namedConstants.Add(new NamedConstant("Pi", Math.PI));
 			namedConstants.Add(new NamedConstant("PI", Math.PI));
@@ -46,6 +49,9 @@ namespace Parser
 
 			namedConstants.Add(new NamedConstant("E", Math.E));
 			namedConstants.Add(new NamedConstant("e", Math.E));
+
+			RegisterStaticFunctions(typeof(Math));
+			RegisterStaticFunctions(typeof(Math), m => m.Name.ToLower());
 		}
 
 		private readonly Collection<string> parameters = new Collection<string>();
@@ -60,9 +66,59 @@ namespace Parser
 			get { return namedConstants; }
 		}
 
+		private readonly Collection<StaticFunction> registeredFunctions = new Collection<StaticFunction>();
+		public Collection<StaticFunction> RegisteredFunctions
+		{
+			get { return registeredFunctions; }
+		}
+
 		public void AddNamedConstant(string name, double value)
 		{
 			namedConstants.Add(new NamedConstant(name, value));
+		}
+
+		public void RegisterStaticFunction(string name, MethodInfo method)
+		{
+			if (String.IsNullOrEmpty(name))
+				throw new ArgumentNullException("name");
+
+			if (method == null)
+				throw new ArgumentNullException("method");
+
+			registeredFunctions.Add(new StaticFunction { Name = name, Method = method });
+		}
+
+		public void RegisterStaticFunction(MethodInfo method)
+		{
+			if (method == null)
+				throw new ArgumentNullException("method");
+
+			registeredFunctions.Add(new StaticFunction { Name = method.Name, Method = method });
+		}
+
+		public void RegisterStaticFunctions(Type type)
+		{
+			RegisterStaticFunctions(type, m => m.Name);
+		}
+
+		public void RegisterStaticFunctions(Type type, Func<MethodInfo, string> nameSelector)
+		{
+			if (type == null)
+				throw new ArgumentNullException("type");
+			if (nameSelector == null)
+				throw new ArgumentNullException("nameSelector");
+
+			var methods = from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
+						  where !method.ContainsGenericParameters
+						  where method.ReturnType == typeof(double)
+						  let parameters = method.GetParameters()
+						  where parameters.Length == 1 && parameters[0].ParameterType == typeof(double)
+						  select method;
+
+			foreach (var method in methods)
+			{
+				RegisterStaticFunction(nameSelector(method), method);
+			}
 		}
 
 		private readonly Dictionary<string, ParameterExpression> parameterExpressions = new Dictionary<string, ParameterExpression>();
@@ -71,16 +127,25 @@ namespace Parser
 			get { return parameterExpressions; }
 		}
 
+		private readonly ObservableCollection<TokenInTextInfo> textInfo = new ObservableCollection<TokenInTextInfo>();
+		public ObservableCollection<TokenInTextInfo> TextInfo
+		{
+			get { return textInfo; }
+		} 
+
 		public IEnumerable<LexicToken> Parse(InputStream input)
 		{
+			textInfo.Clear();
 			parameterExpressions.Clear();
 
 			// sorting to prevent situation when parameter 'x1' is parsed as parameter 'x' when 'x' is available, too.
 			parameterReader.ParameterNames = parameters.OrderByDescending(s => s.Length);
 			namedConstantReader.Constants = NamedConstants;
+			functionReader.Functions = registeredFunctions;
 
 			List<LexicToken> tokens = new List<LexicToken>();
 
+			int start = 0;
 			do
 			{
 				var copy = input;
@@ -92,10 +157,14 @@ namespace Parser
 					if (input.IsEmpty)
 						break;
 
+					start = input.Position;
 					input = reader.TryRead(input, out token);
 
 					if (token != null)
 					{
+						TokenInTextInfo info = new TokenInTextInfo { StartIndex = start, Length = input.Position - start, Token = token };
+						textInfo.Add(info);
+
 						tokens.Add(token);
 					}
 				}
@@ -127,6 +196,9 @@ namespace Parser
 
 		public AST CreateAST(LinkedList<MixedToken> tokens)
 		{
+			if (tokens.Count == 0)
+				throw new ParserException("Empty tokens list.");
+
 			if (tokens.Count == 1 && tokens.First.Value.IsTree)
 				return tokens.First.Value.Tree;
 

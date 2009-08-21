@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 
-namespace Parser.Readers
+namespace MathParser.Readers
 {
 	public class ParameterTokenReader : TokenReader
 	{

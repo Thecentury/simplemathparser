@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Parser.SyntaxTokens
+namespace MathParser.SyntaxTokens
 {
 	public abstract class UnaryOpSyntaxToken : SyntaxToken
 	{
@@ -62,6 +62,11 @@ namespace Parser.SyntaxTokens
 		protected override Expression Compile(Expression expression)
 		{
 			return Expression.Call(method, expression);
+		}
+
+		public override string ToString()
+		{
+			return method.Name;
 		}
 	}
 

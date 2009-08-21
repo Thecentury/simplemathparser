@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Parser.SyntaxTokens;
+using MathParser.SyntaxTokens;
 using System.Linq.Expressions;
-using AST = Parser.Tree<Parser.SyntaxToken>;
+using AST = MathParser.Tree<MathParser.SyntaxToken>;
 
-namespace Parser.SyntaxTokenReaders
+namespace MathParser.SyntaxTokenReaders
 {
 	public sealed class ParameterSyntaxTokenReader : SyntaxTokenReader
 	{

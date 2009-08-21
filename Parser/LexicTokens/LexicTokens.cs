@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace Parser
+namespace MathParser
 {
 	public abstract class LexicToken { }
 

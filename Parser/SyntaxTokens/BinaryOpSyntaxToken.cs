@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
+using MathParser.SyntaxTokens;
 
-namespace Parser
+namespace MathParser
 {
 	public abstract class BinaryOpSyntaxToken : SyntaxToken
 	{
@@ -41,6 +42,20 @@ namespace Parser
 			return Expression.Add(left, right);
 		}
 
+		public override Tree<SyntaxToken> Optimize(Tree<SyntaxToken> tree)
+		{
+			var leftTree = tree.Leafs[0];
+			var rightTree = tree.Leafs[1];
+			var left = leftTree.Value as DoubleConstantSyntaxToken;
+			var right = rightTree.Value as DoubleConstantSyntaxToken;
+
+			if (left != null && left.Value == 0)
+				return rightTree;
+			if (right != null && right.Value == 0)
+				return leftTree;
+			return tree;
+		}
+
 		public override string ToString()
 		{
 			return "+";
@@ -57,6 +72,18 @@ namespace Parser
 		protected override Expression Compile(Expression left, Expression right)
 		{
 			return Expression.Subtract(left, right);
+		}
+
+		public override Tree<SyntaxToken> Optimize(Tree<SyntaxToken> tree)
+		{
+			var leftTree = tree.Leafs[0];
+			var rightTree = tree.Leafs[1];
+			var left = leftTree.Value as DoubleConstantSyntaxToken;
+			var right = rightTree.Value as DoubleConstantSyntaxToken;
+
+			if (right != null && right.Value == 0)
+				return leftTree;
+			return tree;
 		}
 
 		public override string ToString()

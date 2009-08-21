@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 
-namespace Parser
+namespace MathParser
 {
 	internal sealed class ParameterExpressionEqualityComparer : IEqualityComparer<ParameterExpression>
 	{

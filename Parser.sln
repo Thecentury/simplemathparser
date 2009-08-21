@@ -13,9 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser.ConsoleTest", "Parse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{B66BEACE-2567-4077-9DCB-4358AEE68C90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserApp", "ParserApp\ParserApp.csproj", "{B7402D63-8D1A-4308-B754-533A43C3D864}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs07.codeplex.com/
 		SccLocalPath0 = .
@@ -28,6 +30,9 @@ Global
 		SccProjectUniqueName3 = Parser\\Parser.csproj
 		SccProjectName3 = Parser
 		SccLocalPath3 = Parser
+		SccProjectUniqueName4 = ParserApp\\ParserApp.csproj
+		SccProjectName4 = ParserApp
+		SccLocalPath4 = ParserApp
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Parser.vsmdi
@@ -49,6 +54,10 @@ Global
 		{B66BEACE-2567-4077-9DCB-4358AEE68C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B66BEACE-2567-4077-9DCB-4358AEE68C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B66BEACE-2567-4077-9DCB-4358AEE68C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7402D63-8D1A-4308-B754-533A43C3D864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7402D63-8D1A-4308-B754-533A43C3D864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7402D63-8D1A-4308-B754-533A43C3D864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7402D63-8D1A-4308-B754-533A43C3D864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

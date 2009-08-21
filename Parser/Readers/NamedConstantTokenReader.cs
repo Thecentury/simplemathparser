@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Parser.LexicTokens;
+using MathParser.LexicTokens;
 
-namespace Parser.Readers
+namespace MathParser.Readers
 {
 	public class NamedConstantTokenReader : TokenReader
 	{
@@ -18,7 +18,7 @@ namespace Parser.Readers
 			{
 				if (stream.Content.StartsWith(constant.Name))
 				{
-					NamedConstantToken constantToken = new NamedConstantToken { Name = constant.Name, Value = constant.Value };
+					NamedConstantToken constantToken = new NamedConstantToken(constant.Name, constant.Value);
 					token = constantToken;
 
 					return stream.Move(constant.Name.Length);
