@@ -11,7 +11,7 @@ namespace MathParser.SyntaxTokenReaders
 	{
 		public FunctionCallSyntaxTokenReader()
 		{
-			Priority = 1.5;
+			Priority = Priorities.FunctionCall;
 		}
 
 		public override Tree<SyntaxToken> Read(LinkedList<MixedToken> tokens, Grammar grammar)

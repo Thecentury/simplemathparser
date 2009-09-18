@@ -10,7 +10,7 @@ namespace MathParser.SyntaxTokenReaders
 	{
 		public BracketSyntaxTokenReader()
 		{
-			Priority = 1;
+			Priority = Priorities.Brackets;
 		}
 
 		public override AST Read(LinkedList<MixedToken> tokens, Grammar grammar)

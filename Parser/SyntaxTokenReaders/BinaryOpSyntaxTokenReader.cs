@@ -61,7 +61,7 @@ namespace MathParser.SyntaxTokenReaders
 	{
 		public MultiplySyntaxTokenReader()
 		{
-			Priority = 2;
+			Priority = Priorities.Multiplication;
 			OpName = "*";
 		}
 	}
@@ -70,7 +70,7 @@ namespace MathParser.SyntaxTokenReaders
 	{
 		public DivideSyntaxTokenReader()
 		{
-			Priority = 2;
+			Priority = Priorities.Multiplication;
 			OpName = "/";
 		}
 	}
@@ -79,7 +79,7 @@ namespace MathParser.SyntaxTokenReaders
 	{
 		public AddSyntaxTokenReader()
 		{
-			Priority = 3;
+			Priority = Priorities.Addition;
 			OpName = "+";
 		}
 	}
@@ -88,8 +88,17 @@ namespace MathParser.SyntaxTokenReaders
 	{
 		public SubtractSyntaxTokenReader()
 		{
-			Priority = 3;
+			Priority = Priorities.Addition;
 			OpName = "-";
+		}
+	}
+
+	public sealed class PowerSyntaxTokenReader : BinaryOpSyntaxTokenReader<PowerToken, PowerSyntaxToken>
+	{
+		public PowerSyntaxTokenReader()
+		{
+			Priority = Priorities.Power;
+			OpName = "**";
 		}
 	}
 }

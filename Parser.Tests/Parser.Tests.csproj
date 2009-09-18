@@ -7,7 +7,7 @@
     <ProjectGuid>{23CF8346-D9BB-404F-8693-2C8C46864144}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Parser.Tests</RootNamespace>
+    <RootNamespace>MathParser.Tests</RootNamespace>
     <AssemblyName>Parser.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -52,6 +52,7 @@
     <Compile Include="MultiplyTests.cs" />
     <Compile Include="ParameterTests.cs" />
     <Compile Include="ParserTest.cs" />
+    <Compile Include="PowerOperatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleArithmeticTests.cs" />
   </ItemGroup>

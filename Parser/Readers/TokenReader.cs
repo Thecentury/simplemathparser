@@ -40,6 +40,36 @@ namespace MathParser.Readers
 		}
 	}
 
+	public class StringReader : TokenReader
+	{
+		private readonly string str;
+		private readonly LexicToken token;
+
+		public StringReader(string str, LexicToken token)
+		{
+			this.str = str;
+			this.token = token;
+		}
+
+		public override InputStream TryRead(InputStream stream, out LexicToken token)
+		{
+			token = null;
+
+			if (stream.Content.StartsWith(str))
+			{
+				token = this.token;
+				return stream.Move(str.Length);
+			}
+
+			return stream;
+		}
+
+		public override string ToString()
+		{
+			return "StringReader: " + str;
+		}
+	}
+
 	public class WhitespaceReader : TokenReader
 	{
 		public override InputStream TryRead(InputStream stream, out LexicToken token)
@@ -55,43 +85,6 @@ namespace MathParser.Readers
 			{
 				token = new WhitespaceToken();
 				return stream.Move(1);
-			}
-
-			return stream;
-		}
-	}
-
-	public class IntegerReader : TokenReader
-	{
-		public override InputStream TryRead(InputStream stream, out LexicToken token)
-		{
-			token = null;
-
-			char firstChar = stream.Content[0];
-			int value = 0;
-			if (Int32.TryParse(firstChar.ToString(), out value))
-			{
-				token = new DoubleToken(value);
-				return stream.Move(1);
-			}
-
-			return stream;
-		}
-	}
-
-
-	public class DoubleReader : TokenReader
-	{
-		public override InputStream TryRead(InputStream stream, out LexicToken token)
-		{
-			token = null;
-
-			double value;
-			if (Double.TryParse(stream.Content, NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent, CultureInfo.InvariantCulture, out value))
-			{
-				token = new DoubleToken(value);
-				int shift = value.ToString(CultureInfo.InvariantCulture).Length;
-				return stream.Move(shift);
 			}
 
 			return stream;

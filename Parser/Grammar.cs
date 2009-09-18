@@ -22,14 +22,16 @@ namespace MathParser
 
 		public Grammar()
 		{
+			lexicReaders.Add(new DoubleReader());
 			lexicReaders.Add(new CharReader('+', new AddToken()));
 			lexicReaders.Add(new CharReader('-', new SubtractToken()));
+			lexicReaders.Add(new StringReader("**", new PowerToken()));
+			lexicReaders.Add(new CharReader('^', new PowerToken()));
 			lexicReaders.Add(new CharReader('*', new MultiplyToken()));
 			lexicReaders.Add(new CharReader('/', new DivideToken()));
 			lexicReaders.Add(new CharReader('(', new LeftBracketToken()));
 			lexicReaders.Add(new CharReader(')', new RightBracketToken()));
 			lexicReaders.Add(new WhitespaceReader());
-			lexicReaders.Add(new IntegerReader());
 			lexicReaders.Add(parameterReader);
 			lexicReaders.Add(functionReader);
 			lexicReaders.Add(namedConstantReader);
@@ -42,6 +44,7 @@ namespace MathParser
 			syntaxReaders.Add(new BracketSyntaxTokenReader());
 			syntaxReaders.Add(new ParameterSyntaxTokenReader());
 			syntaxReaders.Add(new FunctionCallSyntaxTokenReader());
+			syntaxReaders.Add(new PowerSyntaxTokenReader());
 
 			namedConstants.Add(new NamedConstant("Pi", Math.PI));
 			namedConstants.Add(new NamedConstant("PI", Math.PI));
