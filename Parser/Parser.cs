@@ -39,6 +39,10 @@ namespace MathParser
 			var filteredTokens = grammar.Filter(tokens);
 			var mixedTokens = grammar.ConvertToMixed(filteredTokens);
 			var ast = grammar.CreateAST(mixedTokens);
+
+			if (mixedTokens.Count != 1)
+				throw new ParserException("Wrong expression.");
+
 			var optimizedAst = ast.Optimize();
 
 			var result = new ParsingResult

@@ -127,4 +127,17 @@ namespace MathParser
 			return "/";
 		}
 	}
+
+	public class PowerSyntaxToken : BinaryOpSyntaxToken
+	{
+		protected override double Evaluate(double left, double right)
+		{
+			return Math.Pow(left, right);
+		}
+
+		protected override Expression Compile(Expression left, Expression right)
+		{
+			return Expression.Power(left, right);
+		}
+	}
 }

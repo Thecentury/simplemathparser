@@ -22,6 +22,8 @@ namespace MathParser
 
 	public class RightBracketToken : LexicToken { }
 
+	public class PowerToken : LexicToken { }
+
 	public class DoubleToken : LexicToken
 	{
 		private readonly double value;
