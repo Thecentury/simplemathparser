@@ -24,5 +24,11 @@ namespace MathParser.Tests
 			"1+2*3".Parse().Evaluate().AssertIsEqualTo(7);
 			"2*3+1".Parse().Evaluate().AssertIsEqualTo(7);
 		}
+
+		[TestMethod]
+		public void TestMultiplyAndDivide()
+		{
+			"1/2*2".ParseAndAssert(1.0);
+		}
 	}
 }

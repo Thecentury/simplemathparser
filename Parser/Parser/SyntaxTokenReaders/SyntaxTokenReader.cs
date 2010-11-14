@@ -11,5 +11,7 @@ namespace MathParser
 		public double Priority { get; set; }
 
 		public abstract AST Read(LinkedList<MixedToken> tokens, Grammar grammar);
+
+		public abstract int GetPosition(LinkedList<MixedToken> tokens);
 	}
 }
