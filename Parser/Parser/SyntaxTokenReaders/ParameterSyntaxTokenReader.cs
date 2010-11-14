@@ -32,5 +32,11 @@ namespace MathParser.SyntaxTokenReaders
 			}
 			return null;
 		}
+
+		public override int GetPosition(LinkedList<MixedToken> tokens) {
+			var node = tokens.FindFirst(t => t.IsLexicToken && t.LexicToken is ParameterToken);
+
+			return tokens.IndexOf(node);
+		}
 	}
 }
