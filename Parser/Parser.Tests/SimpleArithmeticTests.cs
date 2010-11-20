@@ -22,19 +22,19 @@ namespace MathParser.Tests
 		}
 
 		[TestMethod]
-		public void TestSutraction()
+		public void Subtraction()
 		{
 			"1-2".ParseAndAssert(-1);
 		}
 
 		[TestMethod]
-		public void TestSubtractionInBrackets()
+		public void SubtractionInBrackets()
 		{
 			"(2-3)".ParseAndAssert(-1);
 		}
 
 		[TestMethod]
-		public void TestUnaryNegativeSubtractioninBrackets()
+		public void UnaryNegativeSubtractioninBrackets()
 		{
 			"-(2-3.1)".ParseAndAssert(1.1);
 		}
@@ -43,6 +43,32 @@ namespace MathParser.Tests
 		public void Test3()
 		{
 			"(1-1)*-1".ParseAndAssert(0);
+		}
+
+		[TestMethod]
+		public void Artur_1()
+		{
+			"6+((7-2)/5-9)*0.5-2".ParseAndAssert(0);
+		}
+
+		[TestMethod]
+		public void Artur_2()
+		{
+			"6+((7-2)/5-9)*0.5-2+1".ParseAndAssert(1);
+		}
+
+		[TestMethod]
+		public void Artur_3()
+		{
+			Parser p = new Parser();
+			var result = p.Parse("6+((7-2)/5-9)*0.5-2+1");
+			var str = result.Tree.ToExpressionString();
+		}
+
+		[TestMethod]
+		public void SubtractAndAdd()
+		{
+			"0*1-1+2".ParseAndAssert(1);
 		}
 	}
 }
