@@ -185,28 +185,41 @@ namespace MathParser {
 
 			//syntaxReaders.Sort((r1, r2) => r1.Priority.CompareTo(r2.Priority));
 
-			var readers = (from gr in
-							   (from reader in syntaxReaders
-								group reader by reader.Priority into @group
-								orderby @group.Key
-								select @group)
-						   from reader in gr
-						   let index = reader.GetPosition(tokens)
-						   where index < Int32.MaxValue
-						   orderby index
-						   select new { reader, index })
-								.OrderBy(x => x.reader.Priority).ThenBy(x => x.index);
+			//var readers = (from gr in
+			//                   (from reader in syntaxReaders
+			//                    group reader by reader.Priority into @group
+			//                    orderby @group.Key
+			//                    select @group)
+			//               from reader in gr
+			//               let index = reader.GetPosition(tokens)
+			//               where index < Int32.MaxValue
+			//               orderby index
+			//               select new { reader, index })
+			//                    .OrderBy(x => x.reader.Priority).ThenBy(x => x.index);
 
 			AST result = null;
-			foreach (var x in readers) {
-				AST tree = null;
-				do {
-					tree = x.reader.Read(tokens, this);
 
-					if (tree != null) result = tree;
-					else break;
-				} while (tree != null);
-			}
+			do
+			{
+				var readers = (from gr in
+								   (from reader in syntaxReaders
+									group reader by reader.Priority into @group
+									orderby @group.Key
+									select @group)
+							   from reader in gr
+							   let index = reader.GetPosition(tokens)
+							   where index < Int32.MaxValue
+							   orderby index
+							   select new { reader, index })
+									.OrderBy(x => x.reader.Priority).ThenBy(x => x.index);
+
+				var r = readers.FirstOrDefault();
+
+				if (r != null)
+					result = r.reader.Read(tokens, this);
+				else
+					break;
+			} while (tokens.Count > 0);
 
 			foreach (var token in tokens) {
 				if (!token.IsTree)
