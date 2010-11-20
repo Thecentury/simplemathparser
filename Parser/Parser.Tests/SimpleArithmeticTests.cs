@@ -66,6 +66,24 @@ namespace MathParser.Tests
 		}
 
 		[TestMethod]
+		public void Artur_4()
+		{
+			"6+((7-2)/5-9)*0.5-2+1+1+1+1".ParseAndAssert(4);
+		}
+
+		[TestMethod]
+		public void Artur_5()
+		{
+			"0+(-0)-0+1".ParseAndAssert(1);
+		}
+
+		[TestMethod]
+		public void Artur_6()
+		{
+			"0+(-0)-0+1+1+1+1+1".ParseAndAssert(5);
+		}
+
+		[TestMethod]
 		public void SubtractAndAdd()
 		{
 			"0*1-1+2".ParseAndAssert(1);
