@@ -32,5 +32,26 @@ namespace MathParser.Tests
 		{
 			"t + t".ParseWithParameters("t").ToExpression<Func<double, double>>().Compile()(10).AssertIsEqualTo(20);
 		}
+
+		[TestMethod]
+		public void CompiledParameters()
+		{
+			var function = "x/x+t".ParseWithParameters("x", "t").ToExpression<Func<double, double, double>>().Compile();
+
+			Assert.AreEqual(3.0, function(1.0, 2.0));
+			Assert.AreEqual(4.0, function(1.0, 3.0));
+			Assert.AreEqual(4.0, function(2.0, 3.0));
+		}
+
+		[TestMethod]
+		public void CompiledParameters_2()
+		{
+			var function = "t/t+x".ParseWithParameters("x", "t").ToExpression<Func<double, double, double>>();
+			var compiled = function.Compile();
+
+			Assert.AreEqual(2.0, compiled(1.0, 2.0));
+			Assert.AreEqual(2.0, compiled(1.0, 4.0));
+			Assert.AreEqual(5.0, compiled(4.0, 2.0));
+		}
 	}
 }

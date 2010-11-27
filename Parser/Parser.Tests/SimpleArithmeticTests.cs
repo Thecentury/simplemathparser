@@ -84,6 +84,12 @@ namespace MathParser.Tests
 		}
 
 		[TestMethod]
+		public void Artur_7()
+		{
+			"1-(0)+1".ParseAndAssert(2);
+		}
+
+		[TestMethod]
 		public void SubtractAndAdd()
 		{
 			"0*1-1+2".ParseAndAssert(1);
