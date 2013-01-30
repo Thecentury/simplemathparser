@@ -130,8 +130,8 @@ namespace MathParser
 			get { return parameterExpressions; }
 		}
 
-		private readonly ObservableCollection<TokenInTextInfo> textInfo = new ObservableCollection<TokenInTextInfo>();
-		public ObservableCollection<TokenInTextInfo> TextInfo
+		private readonly Collection<TokenInTextInfo> textInfo = new Collection<TokenInTextInfo>();
+		public Collection<TokenInTextInfo> TextInfo
 		{
 			get { return textInfo; }
 		} 
@@ -148,19 +148,20 @@ namespace MathParser
 
 			List<LexicToken> tokens = new List<LexicToken>();
 
-			int start = 0;
 			do
 			{
 				var copy = input;
 
 				foreach (var reader in lexicReaders)
 				{
-					LexicToken token = null;
+					LexicToken token;
 
-					if (input.IsEmpty)
+					if ( input.IsEmpty )
+					{
 						break;
+					}
 
-					start = input.Position;
+					int start = input.Position;
 					input = reader.TryRead(input, out token);
 
 					if (token != null)
@@ -172,8 +173,10 @@ namespace MathParser
 					}
 				}
 
-				if (input == copy)
+				if ( input == copy )
+				{
 					throw new ParserException(String.Format("Unexpected character '{0}' in position {1}.", input.Content[0], input.Position));
+				}
 
 			} while (!input.IsEmpty);
 
