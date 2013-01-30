@@ -8,24 +8,28 @@ namespace MathParser.Readers
 {
 	public abstract class RegexReader : TokenReader
 	{
-		public RegexReader(string pattern)
+		protected RegexReader( string pattern )
 		{
-			regex = new Regex(pattern, RegexOptions.Compiled);
+#if PORTABLE
+			regex = new Regex( pattern );
+#else
+ 			regex = new Regex(pattern, RegexOptions.Compiled);
+#endif
 		}
 
 		private readonly Regex regex;
-		public override InputStream TryRead(InputStream stream, out LexicToken token)
+		public override InputStream TryRead( InputStream stream, out LexicToken token )
 		{
 			token = null;
-			Match match = regex.Match(stream.Content);
-			if (match.Success)
+			Match match = regex.Match( stream.Content );
+			if ( match.Success )
 			{
-				token = GetToken(match.Value);
-				return stream.Move(match.Value.Length);
+				token = GetToken( match.Value );
+				return stream.Move( match.Value.Length );
 			}
 			return stream;
 		}
 
-		protected abstract LexicToken GetToken(string value);
+		protected abstract LexicToken GetToken( string value );
 	}
 }

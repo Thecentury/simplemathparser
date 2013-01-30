@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathParser.Tests
@@ -12,8 +10,6 @@ namespace MathParser.Tests
 	[TestClass]
 	public class ParserTest
 	{
-		public TestContext TestContext { get; set; }
-
 		[TestMethod]
 		public void TestMethod1()
 		{
